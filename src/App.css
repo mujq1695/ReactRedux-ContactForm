@@ -111,6 +111,9 @@ table, td, th {
 }
 .login-page{
 
+    background-image: url("../public/bg10.png");
+    background-repeat: no-repeat;
+    background-size: cover;
     
     height: 100vh;
     display:flex;
@@ -133,7 +136,7 @@ table, td, th {
     padding:8px;
     text-align: center;
     align-content: center;
-    margin-top: 85px;
+    margin-top: 175px;
     
 }
 

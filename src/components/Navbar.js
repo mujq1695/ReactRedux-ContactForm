@@ -7,7 +7,7 @@ import {Link, navlink}  from "react-router-dom"
 const Navbar = () => {
     return (
         <>
-            <div className="navbar row r1 header bg-primary text-white m-0 p-3" >
+            <div className="navbar row r1 header bg-primary text-white m-0 p-3 position-absolute w-100" >
                 <div className="hleft col-lg-6 col-md-6 col-6   d-flex  ">
                      <img src={logo1} alt="id-card" /> 
                     <h2 className="pl-2  ">Cloud Contact</h2>

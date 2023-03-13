@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './store'
+import { QueryClientProvider,QueryClient  } from 'react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 // //ACTIONS
@@ -50,14 +51,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 // store.dispatch(increment());
 // store.dispatch(decrement());
 // store.dispatch(decrement());
-
+const queryClient= new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+  <QueryClientProvider client={queryClient}>
     <Router>
       <Provider store={store}>
         <App />
       </Provider>
     </Router>
+    </QueryClientProvider>
   </React.StrictMode>
 );
