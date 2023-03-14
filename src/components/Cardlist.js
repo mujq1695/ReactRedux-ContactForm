@@ -16,11 +16,21 @@ export default function Cardlist() {
 
   // fetching data using react query  Hook without useEffect
   
-  const {isLoading,data}=useQuery('user-data',async ()=>{
+  const {isLoading,isFetching,data}=useQuery('user-data',async ()=>{
    const data = await axios.get('https://dummyjson.com/users');
     setUser(data.data.users);
-   
-  })
+    
+  },
+  
+  {
+    // cacheTime:5000,
+    // staleTime:30000,
+    // refetchOnMount:true,
+    // refetchOnWindowFocus:true,
+    // refetchInterval:false,
+    // refetchIntervalInBackground:true,
+  }
+  )
   console.log('"data"',user);
 
   // fetching data using useEffect Hook without react query
@@ -39,10 +49,11 @@ export default function Cardlist() {
   //       });
   // },[])
 
-  if(isLoading){
+  if(isLoading || isFetching){
 
     return <h2>Loading...</h2>
   }
+  
 
   return (
 

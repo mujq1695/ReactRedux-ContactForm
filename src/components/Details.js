@@ -11,7 +11,7 @@ const Details = () => {
   const param = useParams();
   console.log("param: ",param.userId)
 
-  const{isLoading,isError,error}=useQuery('user-data',async()=>{
+  const{isLoading,isFetching,isError,error,refetch}=useQuery('user-data',async()=>{
     return  await axios.get('https://dummyjson.com/users').then((res)=>{
       setData("resss",res.data.users)
       let newUser=res.data.users.filter((item)=>{return item.id==param.userId})
@@ -24,7 +24,7 @@ const Details = () => {
     return <h2>{error.message}</h2>
   }
 
-  if(isLoading){
+  if(isLoading || isFetching){
     return <h2>Loading...</h2>
   }
 
