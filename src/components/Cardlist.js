@@ -17,7 +17,7 @@ export default function Cardlist() {
   // fetching data using react query  Hook without useEffect
   
   const {isLoading,isFetching,data}=useQuery('user-data',async ()=>{
-   const data = await axios.get('https://dummyjson.com/users');
+   const data = await axios.get('http://localhost:8000/');
     setUser(data.data.users);
     
   },
@@ -31,7 +31,6 @@ export default function Cardlist() {
     // refetchIntervalInBackground:true,
   }
   )
-  console.log('"data"',user);
 
   // fetching data using useEffect Hook without react query
 

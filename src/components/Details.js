@@ -9,13 +9,11 @@ const Details = () => {
   const [user, setUser] = useState();
  
   const param = useParams();
-  console.log("param: ",param.userId)
 
   const{isLoading,isFetching,isError,error,refetch}=useQuery('user-data',async()=>{
     return  await axios.get('https://dummyjson.com/users').then((res)=>{
       setData("resss",res.data.users)
       let newUser=res.data.users.filter((item)=>{return item.id==param.userId})
-      console.log("newUser::: ", newUser)
       setUser(newUser);
     })
   })

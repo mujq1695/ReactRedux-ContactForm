@@ -15,11 +15,9 @@ const Card = ({ item, user, setUser }) => {
         })
             .then(res => res.json())
             .then(res => {
-                console.log(res)
                 if (res.isDeleted === true) {
                     let newUsers = user.filter((res) => res.id !== item.id)
                     setUser([...newUsers])
-                    console.log(user)
                 }
     
             });

@@ -11,6 +11,7 @@ import Card from '../Card'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Cardlist from '../Cardlist'
+import axios from 'axios'
 
 const Banner = () => {
 
@@ -30,7 +31,13 @@ const Banner = () => {
     function addition(e) {
         e.preventDefault();
         dispatch({ type: "INCREMENT_ID" });
-        dispatch({ type: "INCREMENT_FORMDATA" });
+        axios.post('http://localhost:8000/postUsers', {
+            id: id,
+            name: name,
+            email: iemail,
+            phone: iphone
+        }).then((response) => console.log(response))
+        // dispatch({ type: "INCREMENT_FORMDATA" });
 
     }
 
