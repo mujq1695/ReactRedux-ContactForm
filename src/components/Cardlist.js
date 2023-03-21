@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import {useQuery} from 'react-query'
 import axios from 'axios'
 
-export default function Cardlist() {
+export default function Cardlist({mutation}) {
   const [user, setUser] = useState();
   
   const {result}=useSelector((state)=>(
@@ -17,11 +17,16 @@ export default function Cardlist() {
   // fetching data using react query  Hook without useEffect
   
   const {isLoading,isFetching,data}=useQuery('user-data',async ()=>{
-   const data = await axios.get('http://localhost:8000/');
-    setUser(data.data.users);
-    
-  },
-  
+   return await axios.get('http://localhost:8000/');
+  //  console.log(data.data.users)
+  //   setUser(data.data.users);
+  }, {
+    onSuccess: (data) => {
+      // console.log("Get data!");
+      console.log(data);
+    }
+  }
+  ,
   {
     // cacheTime:5000,
     // staleTime:30000,
@@ -48,7 +53,7 @@ export default function Cardlist() {
   //       });
   // },[])
 
-  if(isLoading || isFetching){
+  if(isLoading){
 
     return <h2>Loading...</h2>
   }
@@ -62,7 +67,7 @@ export default function Cardlist() {
           width='100%' margin-top='40px' margin-bottom=' 30px' height='35px' border='1px solid rgb(197, 192, 192)' />
         <div id="parentCard">
           {result.map((item) => <Card key={item.id} item={item} />)}
-          {user&&user.map((item) => <Card key={item.id} item={item} user={user} setUser={setUser} />)}
+          {data && data.data.map((item) => <Card  key={item.id} item={item} user={user} setUser={setUser} mutation={mutation} />)}
           
         </div>
       </div>

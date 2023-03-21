@@ -5,26 +5,31 @@ import phone from "../assets/phone.png"
 import { useNavigate } from 'react-router-dom'
 
 
-const Card = ({ item, user, setUser }) => {
+const Card = ({ item, user, setUser,mutation }) => {
 
     const navigate=useNavigate();
 
     function isDeleted(){
-        fetch(`https://dummyjson.com/users/${item.id}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.json())
-            .then(res => {
-                if (res.isDeleted === true) {
-                    let newUsers = user.filter((res) => res.id !== item.id)
-                    setUser([...newUsers])
-                }
+
+        mutation.mutate(item.id)
+        // fetch(`https://dummyjson.com/users/${item.id}`, {
+        //     method: 'DELETE',
+        // })
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         if (res.isDeleted === true) {
+        //             let newUsers = user.filter((res) => res.id !== item.id)
+        //             setUser([...newUsers])
+        //         }
     
-            });
+        //     });
+
+
     }
 
     function onDetails(){
         navigate(`/Details/${item.id}`)
+
     }
 
     return (

@@ -9,6 +9,8 @@ import avatar3 from "../../assets/avatar3.png"
 import phone from "../../assets/phone.png"
 import Card from '../Card'
 import { useDispatch, useSelector } from 'react-redux'
+import { useMutation } from 'react-query'
+import queryClient from '../../query-client-provider'
 
 import Cardlist from '../Cardlist'
 import axios from 'axios'
@@ -22,6 +24,34 @@ const Banner = () => {
         iphone: state.formReducer.phone
     }));
 
+    const mutation = useMutation({
+        mutationFn: (id) => {
+          return axios.delete(`http://localhost:8000/deleteUser/${id}`)
+        },
+        onSuccess: (data) => {
+            // Boom baby!
+            console.log({data})
+            queryClient.invalidateQueries('user-data')
+          },
+      })
+
+      const postMutation=useMutation({
+        mutationFn:()=>{
+    
+    axios.post('http://localhost:8000/postUsers', {
+        id: id,
+        name: name,
+        email: iemail,
+        phone: iphone
+    }).then((response) => console.log(response))
+    // dispatch({ type: "INCREMENT_FORMDATA" });
+},
+onSuccess:(data)=>{
+    console.log({data})
+        queryClient.invalidateQueries('user-data')
+}
+    })
+
     const dispatch = useDispatch();
 
 
@@ -30,15 +60,8 @@ const Banner = () => {
 
     function addition(e) {
         e.preventDefault();
-        dispatch({ type: "INCREMENT_ID" });
-        axios.post('http://localhost:8000/postUsers', {
-            id: id,
-            name: name,
-            email: iemail,
-            phone: iphone
-        }).then((response) => console.log(response))
-        // dispatch({ type: "INCREMENT_FORMDATA" });
-
+    dispatch({ type: "INCREMENT_ID" });
+       postMutation.mutate();
     }
 
 
@@ -85,7 +108,7 @@ const Banner = () => {
                     </form>
                 </div>
 
-                <Cardlist data={data} />
+                <Cardlist data={data} mutation={mutation} />
             </div>
         </div>
     )
