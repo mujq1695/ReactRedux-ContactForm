@@ -60,5 +60,4 @@ const Card = ({ item, user, setUser,mutation }) => {
         </div>
     )
 }
-
 export default Card

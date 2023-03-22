@@ -38,7 +38,7 @@ const Banner = () => {
       const postMutation=useMutation({
         mutationFn:()=>{
     
-    axios.post('http://localhost:8000/postUsers', {
+     axios.post('http://localhost:8000/postUsers', {
         id: id,
         name: name,
         email: iemail,
