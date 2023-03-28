@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useMutation, useQueryClient,useQuery } from 'react-query'
 
 import imageupload from "../../assets/imageupload.png"
 
@@ -13,6 +14,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Cardlist from '../Cardlist'
 import axios from 'axios'
 
+
+
 const Banner = () => {
 
     const { id, name, iemail, iphone } = useSelector((state) => ({
@@ -25,18 +28,43 @@ const Banner = () => {
     const dispatch = useDispatch();
 
 
-    const [prof, setProf] = useState(false);
-    const [data, setData] = useState([]);
+    // const [prof, setProf] = useState(false);
+    // const [data, setData] = useState([]);
+
+    const {data}=useQuery('user-data',async ()=>{
+       return  await axios.get("http://localhost:3000/").then((res)=>{
+        
+        
+       });
+       
+    })
+    
+    let userData=data&&data.data;
+    let userLength=userData&&userData.length;
+    console.log('userDataLength',userData&&userLength);
+    
+    
+
+const queryClient = useQueryClient();
+    let mutation= useMutation({
+        mutationFn:()=>{
+            axios.post('http://localhost:3000/postUsers', {
+                id: id,
+                name: name,
+                email: iemail,
+                phone: iphone
+            }).then((response) => console.log(response))
+        },
+        onSuccess:()=>{
+            queryClient.invalidateQueries('user-data');
+        }
+    })
 
     function addition(e) {
         e.preventDefault();
-        dispatch({ type: "INCREMENT_ID" });
-        axios.post('http://localhost:8000/postUsers', {
-            id: id,
-            name: name,
-            email: iemail,
-            phone: iphone
-        }).then((response) => console.log(response))
+        dispatch({ type: "INCREMENT_ID",payload:userLength && userLength });
+
+       mutation.mutate();
         // dispatch({ type: "INCREMENT_FORMDATA" });
 
     }
@@ -85,7 +113,7 @@ const Banner = () => {
                     </form>
                 </div>
 
-                <Cardlist data={data} />
+                <Cardlist  />
             </div>
         </div>
     )

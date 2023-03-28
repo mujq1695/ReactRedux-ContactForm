@@ -6,7 +6,7 @@ import {useQuery} from 'react-query'
 import axios from 'axios'
 
 export default function Cardlist() {
-  const [user, setUser] = useState();
+ 
   
   const {result}=useSelector((state)=>(
     {
@@ -17,8 +17,8 @@ export default function Cardlist() {
   // fetching data using react query  Hook without useEffect
   
   const {isLoading,isFetching,data}=useQuery('user-data',async ()=>{
-   const data = await axios.get('http://localhost:8000/');
-    setUser(data.data.users);
+   return await axios.get('http://localhost:3000/');
+    
     
   },
   
@@ -62,7 +62,7 @@ export default function Cardlist() {
           width='100%' margin-top='40px' margin-bottom=' 30px' height='35px' border='1px solid rgb(197, 192, 192)' />
         <div id="parentCard">
           {result.map((item) => <Card key={item.id} item={item} />)}
-          {user&&user.map((item) => <Card key={item.id} item={item} user={user} setUser={setUser} />)}
+          {data&&data.data.map((item) => <Card key={item.id} item={item}  />)}
           
         </div>
       </div>

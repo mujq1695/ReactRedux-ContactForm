@@ -7,10 +7,11 @@ const initialState = {
 }
 
 const formReducer = (state = initialState, action) => {
+    
     switch (action.type) {
 
         case "INCREMENT_ID":
-            return { ...state, id: state.id + 1 }
+            return { ...state, id: action.payload +1 }
         case "INCREMENT_NAME":
             return { ...state, name: action.payload }
         case "INCREMENT_EMAIL":
